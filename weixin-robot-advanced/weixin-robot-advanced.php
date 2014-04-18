@@ -30,10 +30,6 @@ if(weixin_robot_get_setting('weixin_credit')){
 	include(WEIXIN_ROBOT_PLUGIN_DIR.'/weixin-robot-credit.php');		// 微信积分系统
 }
 
-if(weixin_robot_get_setting('weixin_advanced_api')) {
-	include(WEIXIN_ROBOT_PLUGIN_DIR.'/weixin-robot-oauth.php');			// OAuth 2.0 接口
-}
-
 if(is_admin()){
 	include(WEIXIN_ROBOT_PLUGIN_DIR.'/weixin-robot-options.php');		// 后台选项
 	include(WEIXIN_ROBOT_PLUGIN_DIR.'/weixin-robot-custom-reply.php');	// 自定义回复
