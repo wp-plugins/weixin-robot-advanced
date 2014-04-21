@@ -114,10 +114,10 @@ function weixin_robot_stats2_page(){
 			$tabs['qrcode-stats']	= '二维码扫描';
 		}
 	}
-	if(weixin_robot_get_setting('weixin_credit')){
-		$tabs['post-share']	= '文章分享';
-		$tabs['user-share']	= '用户分享';
-	}
+	//if(weixin_robot_get_setting('weixin_credit')){
+	//	$tabs['post-share']	= '文章分享';
+	//	$tabs['user-share']	= '用户分享';
+	//}
 	$tabs = apply_filters('weixin_stats_tabs', $tabs);
 	?>
 	<div class="wrap">

@@ -69,7 +69,7 @@ function weixin_robot_basic_page() {
 		?>
 		<div class="wrap">
 			<h2>微信机器人</h2>
-			<p>由于商城被人 DDOS，已经购买用户，请发邮件到 denis@wpjam.com 获取授权码（提供授权的域名）。<br />未购买用户，目前只能联系 QQ 11497107 购买。</p>
+			<p>由于商城被人 DDOS，更换了授权模式，已经购买用户，请到这里 <a href="http://wpjam.net/wp-admin/admin.php?page=orders&domain_limit=1&product_id=56" class="button">获取授权码</a>。<br />未购买用户，请联系 QQ 11497107 购买。</p>
 			<!--<p>你还没有授权域名，点击这里：<a href="http://wpjam.net/wp-admin/admin.php?page=orders&domain_limit=1&product_id=56" class="button">授权域名</a></p>-->
 			<form method="post" action="<?php echo admin_url('admin.php?page='.$plugin_page); ?>" enctype="multipart/form-data" id="form">
 				<input type="text" id="wpjam_net_domain_check_56" name="wpjam_net_domain_check_56" value="" class="regular-text" />

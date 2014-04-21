@@ -64,7 +64,7 @@ function wpjam_net_get_plugin_datas($paged = 1){
 	return $plugin_datas;
 }
 
-add_action( 'admin_menu', 'wpjam_net_admin_menu' );
+//add_action( 'admin_menu', 'wpjam_net_admin_menu' );
 function wpjam_net_admin_menu() {
 	$wpjam_net_admin_menu = apply_filters('wpjam_net_admin_menu',true);
 
@@ -292,13 +292,13 @@ function wpjam_net_single_product($item,$action=false){
 }
 
 
-if(is_admin()){
-	add_action('init','wpjam_net_init');
-}
+//if(is_admin()){
+//	add_action('init','wpjam_net_init');
+//}
 
-function wpjam_net_init(){
-	add_action('wp_dashboard_setup', 'wpjam_net_dashboard_setup' );
-}
+//function wpjam_net_init(){
+//	add_action('wp_dashboard_setup', 'wpjam_net_dashboard_setup' );
+//}
 
 function wpjam_net_dashboard_setup() {
 	if(current_user_can('manage_options')){
