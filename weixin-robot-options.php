@@ -186,11 +186,10 @@ function weixin_robot_credit_section_callback(){
 }
 
 function weixin_robot_basic_validate( $weixin_robot_basic ) {
-	global $plugin_page;
 
 	$current = get_option( 'weixin-robot-basic' );
 
-	if($plugin_page == 'weixin-robot'){
+	if(isset($weixin_robot_basic['weixin_token'])){
 		if ( !is_numeric( $weixin_robot_basic['weixin_keyword_allow_length'] ) ){
 			$weixin_robot_basic['weixin_keyword_allow_length'] = $current['weixin_keyword_allow_length'];
 			add_settings_error( 'weixin-robot-basic', 'invalid-int', '搜索关键字最大长度必须为数字。' );
