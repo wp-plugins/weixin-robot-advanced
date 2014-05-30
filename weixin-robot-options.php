@@ -151,6 +151,7 @@ function weixin_robot_get_option_labels(){
     	}elseif(isset($_GET['tab']) && $_GET['tab'] == 'default-reply'){
 	    	$default_reply_section_fields = array(
 		    	'weixin_welcome'				=> array('title'=>'用户关注时',		'type'=>'textarea', 'rows'=>7),
+				'weixin_wkd'					=> array('title'=>'多客服',			'type'=>'text', 	'description'=>'设置用户进入多客服系统直接咨询客户的关键字'),
 				'weixin_enter'					=> array('title'=>'进入服务号',		'type'=>'textarea', 'rows'=>7,	'description'=>'用户进入微信服务号之后的默认回复，一天内只回复一次（你可以通过 <code>weixin_enter_time</code> 这个 filter 来更改时长）。<br />这个功能只有开通了高级接口的服务号才能使用，并且在用户确认允许公众号使用其地理位置才可使用。'),
 				'weixin_not_found'				=> array('title'=>'搜索没有匹配时',	'type'=>'textarea', 'rows'=>5,	'description'=>'可以使用 [keyword] 代替相关的搜索关键字，留空则不回复！'),
 				'weixin_keyword_too_long'		=> array('title'=>'发送的文本太长',	'type'=>'textarea',	'rows'=>5,	'description'=>'设置超过最大长度提示语，留空则不回复！'),
@@ -159,6 +160,11 @@ function weixin_robot_get_option_labels(){
 		    	'weixin_default_image'			=> array('title'=>'发送图片',			'type'=>'textarea', 'rows'=>5,	'description'=>'设置图片的默认回复文本，留空则不回复！'),
 		    	'weixin_default_link'			=> array('title'=>'发送链接',			'type'=>'textarea', 'rows'=>5,	'description'=>'设置链接的默认回复文本，留空则不回复！'),
 		    );
+
+			if(weixin_robot_get_setting('weixin_advanced_api') == '') {
+				unset($default_reply_section_fields['weixin_wkd']);
+				unset($default_reply_section_fields['weixin_enter']);
+			}
 
     		$default_reply_section_fields = apply_filters('weixin_default_reply',	$default_reply_section_fields);
 	    	$sections = array(
@@ -211,6 +217,8 @@ function weixin_robot_basic_validate( $weixin_robot_basic ) {
 			}
 		}
 	}
+
+	weixin_robot_delete_transient_cache($echo = false);
 
 	return wp_parse_args($weixin_robot_basic,$current);
 }
@@ -282,28 +290,38 @@ function weixin_robot_datas_page() {
 			echo '<li><strong>微信用户表</strong>表已经已经升级</li>';
 		}
 
+		$sql = "DESCRIBE " . $wpdb->weixin_users . " 'unionid'";
+		if($wpdb->query($sql) == 0){
+
+			$sql = "ALTER TABLE  " . $wpdb->weixin_users . " ADD  `unionid` VARCHAR( 30 )  NOT NULL AFTER  `headimgurl`";
+			$wpdb->query($sql);
+
+			echo '<li><strong>微信用户表</strong>表已经已经升级</li>';
+		}
+
 		?>
 		</ol>
 		<h3>缓存</h3>
-		<?php
-		$weixin_transient_caches = array(
-			'自定义回复'			=> array('weixin_custom_keywords_full','weixin_custom_keywords_prefix'),
-			'内置回复'			=> array('weixin_builtin_replies','weixin_builtin_replies_new'),
-			'微信 Access Token '	=> array('weixin_robot_access_token'),
-		);
-		$weixin_transient_caches = apply_filters('weixin_transient_caches',$weixin_transient_caches);
-		?>
-		<ol>
-		<?php foreach ($weixin_transient_caches as $name => $cache_keys) {
-			foreach ($cache_keys as $cache_key) {
-				delete_transient($cache_key);
-			}
-			echo '<li><strong>'.$name.'缓存</strong>已经清除</li>';
-		}
-		?>
+		<?php weixin_robot_delete_transient_cache(); ?>
 		</ol>
 	</div>
 	<?php		
+}
+
+function weixin_robot_delete_transient_cache($echo = true){
+	$weixin_transient_caches = array(
+		'自定义回复'			=> array('weixin_custom_keywords_full','weixin_custom_keywords_prefix'),
+		'内置回复'			=> array('weixin_builtin_replies','weixin_builtin_replies_new'),
+		'微信 Access Token '	=> array('weixin_robot_access_token'),
+	);
+	$weixin_transient_caches = apply_filters('weixin_transient_caches',$weixin_transient_caches);
+	
+	foreach ($weixin_transient_caches as $name => $cache_keys) {
+		foreach ($cache_keys as $cache_key) {
+			delete_transient($cache_key);
+		}
+		if($echo) echo '<li><strong>'.$name.'缓存</strong>已经清除</li>';
+	}
 }
 
 // 用户列表

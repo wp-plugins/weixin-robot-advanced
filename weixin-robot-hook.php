@@ -65,9 +65,28 @@ function weixin_robot_create_table() {
 		  `province` varchar(255) NOT NULL,
 		  `language` varchar(255) NOT NULL,
 		  `headimgurl` varchar(255) NOT NULL,
+		  `unionid` varchar(30) NOT NULL,
 		  `last_update` int(10) NOT NULL,
 		  PRIMARY KEY  (`id`),
 		  UNIQUE KEY `weixin_openid` (`openid`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+		";
+ 
+		dbDelta($sql);
+	}
+
+	if($wpdb->get_var("show tables like '{$wpdb->weixin_custom_replies}'") != $wpdb->weixin_custom_replies) {
+		$sql = "
+		CREATE TABLE IF NOT EXISTS `{$wpdb->weixin_custom_replies}` (
+			`id` bigint(20) NOT NULL AUTO_INCREMENT,
+			`keyword` varchar(255)  NOT NULL,
+			`match` varchar(10)  NOT NULL DEFAULT 'full',
+			`reply` text  NOT NULL,
+			`status` int(1) NOT NULL DEFAULT '1',
+			`time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			`type` varchar(10)  NOT NULL DEFAULT 'text',
+			PRIMARY KEY (`id`),
+			UNIQUE KEY `keyword` (`keyword`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		";
  
@@ -93,24 +112,6 @@ function weixin_robot_create_table() {
 		  PRIMARY KEY  (`id`),
 		  KEY `type` (`type`),
 		  KEY `weixin_openid` (`weixin_openid`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-		";
- 
-		dbDelta($sql);
-	}
-
-	if($wpdb->get_var("show tables like '$wpdb->weixin_custom_replies'") != $wpdb->weixin_custom_replies) {
-		$sql = "
-		CREATE TABLE IF NOT EXISTS " . $wpdb->weixin_custom_replies . " (
-			`id` bigint(20) NOT NULL AUTO_INCREMENT,
-			`keyword` varchar(255)  NOT NULL,
-			`match` varchar(10)  NOT NULL DEFAULT 'full',
-			`reply` text  NOT NULL,
-			`status` int(1) NOT NULL DEFAULT '1',
-			`time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			`type` varchar(10)  NOT NULL DEFAULT 'text',
-			PRIMARY KEY (`id`),
-			UNIQUE KEY `keyword` (`keyword`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		";
  
@@ -315,6 +316,7 @@ function weixin_robot_get_builtin_replies($type = ''){
 
 		if(weixin_robot_get_setting('weixin_advanced_api') ){
 			$weixin_builtin_replies['[event-location]']	= array('type'=>'full',	'reply'=>'获取用户地理位置',	'function'=>'weixin_robot_location_event_reply');
+			$weixin_builtin_replies[weixin_robot_get_setting('weixin_wkd')]	= array('type'=>'full',	'reply'=>'进入多客服',	'function'=>'weixin_robot_wkd_reply');
 		}
 
 		foreach (array( 'hi', 'h', 'help', '帮助', '您好', '你好') as $welcome_keyword) {
@@ -395,6 +397,12 @@ function weixin_robot_welcome_reply($keyword){
 	$weixin_welcome = weixin_robot_str_replace(weixin_robot_get_setting('weixin_welcome'),$wechatObj);
 	echo sprintf($wechatObj->get_textTpl(), $weixin_welcome);
 	$wechatObj->set_response('welcome');
+}
+
+function weixin_robot_wkd_reply($keyword){
+	global $wechatObj;
+	echo $wechatObj->get_transfer_customer_serviceTpl();
+	$wechatObj->set_response('wkd');
 }
 
 // 订阅回复
