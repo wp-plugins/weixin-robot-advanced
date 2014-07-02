@@ -286,14 +286,19 @@ function weixin_robot_datas_page() {
 
 			$sql = "ALTER TABLE  " . $wpdb->weixin_users . " ADD  `privilege` TEXT NOT NULL AFTER  `refresh_token`";
 			$wpdb->query($sql);
-
-			echo '<li><strong>微信用户表</strong>表已经已经升级</li>';
 		}
 
 		$sql = "DESCRIBE " . $wpdb->weixin_users . " 'unionid'";
 		if($wpdb->query($sql) == 0){
 
 			$sql = "ALTER TABLE  " . $wpdb->weixin_users . " ADD  `unionid` VARCHAR( 30 )  NOT NULL AFTER  `headimgurl`";
+			$wpdb->query($sql);
+		}
+
+		$sql = "DESCRIBE " . $wpdb->weixin_users . " 'remark'";
+		if($wpdb->query($sql) == 0){
+
+			$sql = "ALTER TABLE  " . $wpdb->weixin_users . " ADD  `remark` VARCHAR( 30 )  NOT NULL AFTER  `headimgurl`";
 			$wpdb->query($sql);
 
 			echo '<li><strong>微信用户表</strong>表已经已经升级</li>';
