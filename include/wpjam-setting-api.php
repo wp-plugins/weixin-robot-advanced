@@ -231,7 +231,7 @@ function wpjam_get_option($option_name, $defaults = array()){
 	if($option){
 		return $option;
 	}else{
-		$defaults = apply_filters('wpjam_defaults', $defaults, $option_name);
+		$defaults = apply_filters($option_name.'_defaults', $defaults);
 		return wp_parse_args($option, $defaults);
 	}
 }
@@ -709,4 +709,15 @@ function wpjam_upload_image_script(){
         });
     </script>
 <?php
+}
+
+// 获取当前页面 url
+function wpjam_get_current_page_url(){
+    $ssl        = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
+    $sp         = strtolower($_SERVER['SERVER_PROTOCOL']);
+    $protocol   = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+    $port       = $_SERVER['SERVER_PORT'];
+    $port       = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
+    $host       = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+    return $protocol . '://' . $host . $port . $_SERVER['REQUEST_URI'];
 }
