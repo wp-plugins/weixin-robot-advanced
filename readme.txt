@@ -16,7 +16,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 每次升级之后，请点击数据检测和清理。
 
-’详细介绍： http://blog.wpjam.com/project/weixin-robot-advanced/ 
+详细介绍： http://blog.wpjam.com/project/weixin-robot-advanced/ 
+
 使用文档： http://wpjam.com/go/weixin 
 
 QQ 群：106839672

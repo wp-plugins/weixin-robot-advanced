@@ -93,7 +93,7 @@ function weixin_robot_get_option_labels(){
     if($plugin_page == 'weixin-robot'){
     	$basic_section_fields = array(
 			'weixin_token'					=> array('title'=>'微信 Token',		'type'=>'text'),
-			'weixin_default'				=> array('title'=>'默认缩略图',		'type'=>'text'),
+			'weixin_default'				=> array('title'=>'默认缩略图',		'type'=>'image'),
 			'weixin_keyword_allow_length'	=> array('title'=>'搜索关键字最大长度','type'=>'text',		'description'=>'一个汉字算两个字节，一个英文单词算两个字节，空格不算，搜索多个关键字可以用空格分开！'),
 			'weixin_count'					=> array('title'=>'返回结果最大条数',	'type'=>'text',		'description'=>'微信接口最多支持返回10个。'), 
 			'weixin_disable_search'			=> array('title'=>'关闭搜索',			'type'=>'checkbox',	'description'=>'关闭搜索，则只有定义在自定义回复和内置回复的关键字有效，不会去搜索博客文章。'), 
@@ -107,7 +107,7 @@ function weixin_robot_get_option_labels(){
 		);
 
 	    $third_party_section_fields = array(
-			'weixin_3rd_url'				=> array('title'=>'第三方微信平台链接',	'type'=>'text',		'description'=>'推荐使用<a href="http://weixin.digirepub.com/">微信共和</a>！'),
+			'weixin_3rd_url'				=> array('title'=>'第三方微信平台链接',	'type'=>'url',		'description'=>'推荐使用<a href="http://weixin.digirepub.com/">微信共和</a>！'),
 			'weixin_3rd_token'				=> array('title'=>'第三方微信平台 Token',	'type'=>'text',		'description'=>''),
 			'weixin_3rd_search'				=> array('title'=>'第三方微信平台搜索',	'type'=>'checkbox',	'description'=>'所有在WordPress找不到内容的关键词都提交到第三方微信平台处理。')
 		);
