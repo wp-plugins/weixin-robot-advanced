@@ -655,7 +655,7 @@ function wpjam_weixin_pre_get_thumb($thumb,$size,$post){
 	return $thumb;
 }
 
-add_action('wp','weixin_robot_wp');
+// add_action('wp','weixin_robot_wp');
 function weixin_robot_wp(){
 	if(is_singular() && is_weixin()){
 		add_action( 'wp_enqueue_scripts', 'weixin_robot_enqueue_scripts' );

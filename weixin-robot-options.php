@@ -69,13 +69,17 @@ function weixin_robot_basic_page() {
 		?>
 		<div class="wrap">
 			<h2>微信机器人</h2>
-			<p>商城更换了授权模式，已经购买用户，请到这里 <a href="http://wpjam.net/wp-admin/admin.php?page=orders&domain_limit=1&product_id=56" class="button">获取授权码</a>。<br />未购买用户，请联系 QQ 11497107 购买。</p>
-			<!--<p>你还没有授权域名，点击这里：<a href="http://wpjam.net/wp-admin/admin.php?page=orders&domain_limit=1&product_id=56" class="button">授权域名</a></p>-->
-			<form method="post" action="<?php echo admin_url('admin.php?page='.$plugin_page); ?>" enctype="multipart/form-data" id="form">
-				<input type="text" id="wpjam_net_domain_check_56" name="wpjam_net_domain_check_56" value="" class="regular-text" />
-				<?php wp_nonce_field('weixin_robot','weixin_robot_options_nonce'); ?>
-				<p class="submit"><input class="button-primary" type="submit" value="提交" /></p>
-			</form>
+			<ol>
+				<li>关注公众号“WPJAM”：<br /><img src="<?php echo WEIXIN_ROBOT_PLUGIN_URL; ?>/static/weixin-qrcode.jpg" /></li>
+				<li>发送“域名+<?php echo wpjam_net_get_domain();?>”即可免费获取授权码</li>
+				<li>将获取的授权码填入下面的输入框：<br /><br />
+					<form method="post" action="<?php echo admin_url('admin.php?page='.$plugin_page); ?>" enctype="multipart/form-data" id="form">
+						<input type="text" id="wpjam_net_domain_check_56" name="wpjam_net_domain_check_56" value="" class="regular-text" />
+						<?php wp_nonce_field('weixin_robot','weixin_robot_options_nonce'); ?>
+						<p class="submit"><input class="button-primary" type="submit" value="提交" /></p>
+					</form>
+				</li>
+			</ol>
 		</div>
 		<?php
 	}
@@ -113,13 +117,13 @@ function weixin_robot_get_option_labels(){
 		);
 
 	    $credit_section_fields = array(
-			'weixin_credit'					=> array('title'=>'开启微信积分系统',	'type'=>'checkbox',	'description'=>'开启积分系统，用户既可以签到和分享文章来获取积分'),
-			'weixin_day_credit_limit'		=> array('title'=>'每日积分上限',		'type'=>'text',		'description'=>'设置每日积分上限，防止用户刷分。'),
+			'weixin_credit'					=> array('title'=>'开启微信积分系统',	'type'=>'checkbox',	'description'=>'开启积分系统'),
+			// 'weixin_day_credit_limit'		=> array('title'=>'每日积分上限',		'type'=>'text',		'description'=>'设置每日积分上限，防止用户刷分。'),
 			'weixin_checkin_credit'			=> array('title'=>'签到积分',			'type'=>'text',		'description'=>'用户点击签到菜单，或者发送签单之后获取的积分。'),
-			'weixin_SendAppMessage_credit'	=> array('title'=>'发送给好友积分',	'type'=>'text',		'description'=>'用户每次发送文章给好友所能获取的积分，每篇文章只能获取一次。'),
-			'weixin_ShareTimeline_credit'	=> array('title'=>'分享到朋友圈积分',	'type'=>'text',		'description'=>'用户每次分享文章到朋友圈所能获取的积分，每篇文章只能获取一次。'),
-			'weixin_ShareWeibo_credit'		=> array('title'=>'分享到腾讯微博积分','type'=>'text',		'description'=>'用户每次分享文章到腾讯微博所能获取的积分，每篇文章只能获取一次。'),
-			'weixin_share_notify'			=> array('title'=>'积分提醒',			'type'=>'checkbox',	'description'=>'分享成功获取积分之后是否提醒用户。'),
+			// 'weixin_SendAppMessage_credit'	=> array('title'=>'发送给好友积分',	'type'=>'text',		'description'=>'用户每次发送文章给好友所能获取的积分，每篇文章只能获取一次。'),
+			// 'weixin_ShareTimeline_credit'	=> array('title'=>'分享到朋友圈积分',	'type'=>'text',		'description'=>'用户每次分享文章到朋友圈所能获取的积分，每篇文章只能获取一次。'),
+			// 'weixin_ShareWeibo_credit'		=> array('title'=>'分享到腾讯微博积分','type'=>'text',		'description'=>'用户每次分享文章到腾讯微博所能获取的积分，每篇文章只能获取一次。'),
+			// 'weixin_share_notify'			=> array('title'=>'积分提醒',			'type'=>'checkbox',	'description'=>'分享成功获取积分之后是否提醒用户。'),
 	    );
 
     	$sections = array(
@@ -186,9 +190,9 @@ function weixin_robot_basic_section_callback(){
 }
 
 function weixin_robot_credit_section_callback(){
-	echo '
-<p><strong>根据<a href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=business/faq_operation_tmpl&type=info&lang=zh_CN&token=">微信公众平台运营规范</a>，诱导分享行为（以奖励或其他方式，强制或诱导用户将消息分享至朋友圈的行为。奖励的方式包括但不限于：实物奖品、虚拟奖品（积分、信息）等。）一经发现将根据违规程度对该公众帐号采取相应的处理措施。所以使用的时候请注意尺度，<span style="color:red;">由此造成封号，结果由微信公众号运营者本人承担。</a></strong></p>
-';
+// 	echo '
+// <p><strong>根据<a href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=business/faq_operation_tmpl&type=info&lang=zh_CN&token=">微信公众平台运营规范</a>，诱导分享行为（以奖励或其他方式，强制或诱导用户将消息分享至朋友圈的行为。奖励的方式包括但不限于：实物奖品、虚拟奖品（积分、信息）等。）一经发现将根据违规程度对该公众帐号采取相应的处理措施。所以使用的时候请注意尺度，<span style="color:red;">由此造成封号，结果由微信公众号运营者本人承担。</a></strong></p>
+// ';
 }
 
 function weixin_robot_basic_validate( $weixin_robot_basic ) {

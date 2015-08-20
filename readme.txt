@@ -2,8 +2,8 @@
 Contributors: denishua
 Donate link: https://me.alipay.com/denishua
 Tags: weixin,微信
-Requires at least: 3.5
-Tested up to: 4.0
+Requires at least: 3.6
+Tested up to: 4.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,9 +16,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 每次升级之后，请点击数据检测和清理。
 
-详细介绍： http://blog.wpjam.com/project/weixin-robot-advanced/ 
+详细演示： 请关注公众号：WPJAM
 
-使用文档： http://wpjam.com/go/weixin 
+使用文档： http://wpjam.com/go/weixin/
 
 QQ 群：106839672
 
@@ -27,4 +27,4 @@ QQ 群：106839672
 1. 上传到 `/wp-content/plugins/` 目录
 2. 在后台插件菜单激活该插件
 3. 然后设置
-4. 加 QQ 11497107 获取授权码
+4. 按照要求获取授权码，开始使用

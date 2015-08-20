@@ -126,7 +126,7 @@ ul.buttons li a{text-decoration:none;color:#000;}
 <?php } else {  ?>
 	<p><strong>你现在共有 <?php echo weixin_robot_get_credit($weixin_openid); ?> 积分</strong>：</p>
 	<ul class="buttons">
-		<li><a href="<?php echo home_url('?weixin_user&profile&credit_rule=1')?>" class=button>查看积分规则</a></li>
+		<!-- <li><a href="<?php // echo home_url('?weixin_user&profile&credit_rule=1')?>" class=button>查看积分规则</a></li> -->
 		<li><a href="<?php echo home_url('?weixin_user&profile&update=1')?>" class=button>修改个人资料</a></li>
 	</ul>
 	
